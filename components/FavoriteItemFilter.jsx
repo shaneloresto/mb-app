@@ -1,8 +1,13 @@
 import styled from 'styled-components';
+import { Box, TextField, Typography } from '@mui/material';
 const FavoriteItemFilter = ({searchMovie, handleSearchMovieChange}) => (
-    <StyledDiv style={{ margin: '15px'}}>Show only movies containing:&nbsp;
-        <input value={searchMovie} onChange={handleSearchMovieChange} />
-    </StyledDiv>
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ ml: 3 }}>
+            <Typography>Show only</Typography>
+            <Typography>messages containing:</Typography>
+        </Box>
+        <TextField sx={{ ml: 1 }} value={searchMovie} onChange={handleSearchMovieChange} />
+    </Box>
 );
 const StyledDiv = styled.div`
     background-color: rgba(255, 255, 255, 0.5);

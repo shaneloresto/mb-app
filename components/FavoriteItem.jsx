@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Trash } from 'lucide-react';
-const FavoriteItem = ({ id, itemName, itemLink, color, editMovie, deleteMovie }) => {
+import { useContext } from 'react';
+import moviesContext from '../moviesContext';
+import { Button, ListItem, TextField } from '@mui/material';
+const FavoriteItem = ({ id, itemName, itemLink, color }) => {
+    const {editMovie, deleteMovie} = useContext(moviesContext);
     const [isEditable, setIsEditable] = useState(false);
     const modifyMovieTitle = modifiedTitle => {
         editMovie(id, modifiedTitle);
@@ -9,11 +13,11 @@ const FavoriteItem = ({ id, itemName, itemLink, color, editMovie, deleteMovie })
     }
     return (
         <>
-        <StyledListItem onDoubleClick={ () => setIsEditable(true) } color={color}>
+        <ListItem onDoubleClick={ () => setIsEditable(true) } color={color}>
             { isEditable ? <EditMovieTitleForm itemName={itemName} modifyMovieTitle={modifyMovieTitle}/> : itemName}
             :&nbsp;&nbsp;<a href={itemLink}>{itemLink}</a>
-            <Trash style={{ marginTop: '8px'}} color='red' onClick={ () => deleteMovie(id) }/>
-        </StyledListItem>
+            <Button><Trash style={{ marginTop: '8px'}} color='red' onClick={ () => deleteMovie(id) }/></Button>
+        </ListItem>
         </>
     );
 }
@@ -25,7 +29,7 @@ const EditMovieTitleForm = ({itemName,modifyMovieTitle}) => {
     }
     return (
         <form onSubmit={handleFormSubmit}>
-            <input value={modifiedMovieTitle} onChange={event=>setModifiedMovieTitle(event.target.value)}/>
+            <TextField value={modifiedMovieTitle} onChange={event=>setModifiedMovieTitle(event.target.value)}/>
         </form>
     )
 }
