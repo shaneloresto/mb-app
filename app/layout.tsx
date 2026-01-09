@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 const RootLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <MessagesProvider>{children}</MessagesProvider>
+    <html><body><MessagesProvider>{children}</MessagesProvider></body></html>
   );
 }
 export default RootLayout;
