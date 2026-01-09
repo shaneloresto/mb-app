@@ -1,7 +1,6 @@
 import Message from './Message';
-import List from '@mui/material/List';
 import { useContext } from 'react';
-import MessagesContext from '../MessagesContext';
+import MessagesContext from '@/context/MessagesContext';
 
 
 const DisplayMessages = ({ searchMessage }) => {
@@ -13,7 +12,8 @@ const DisplayMessages = ({ searchMessage }) => {
     : messages
   
   return (
-    <List sx={{ ml: 1 }}>
+    // <List sx={{ ml: 1 }}>
+    <ul>
       {messagesToShow.map(message =>
         <Message
           key={message.id}
@@ -21,7 +21,8 @@ const DisplayMessages = ({ searchMessage }) => {
           messageText={message.text}
         />
       )}
-    </List>
+    </ul>
+    // </List>
   );
 }
 
