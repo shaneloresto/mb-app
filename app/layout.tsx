@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import MessagesProvider from "@/providers/MoviesProvider";
+import MessagesProvider from "@/providers/MessagesProvider";
+
 export const metadata: Metadata = {
   title: "ICS 221 Message Board App",
   description: "Front-end App for ICS 221",
