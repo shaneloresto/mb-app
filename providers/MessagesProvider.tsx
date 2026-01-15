@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import messageService from '@/services/messageService';
 import MessagesContext from '@/context/MessagesContext';
 import { useRouter } from 'next/navigation';
+import type { TMessage } from '@/types/shared.types';
 
-const MessagesProvider = ({children}) => {
+const MessagesProvider = ({children}: {children: React.ReactNode}) => {
   // list of messages 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<TMessage[]>([]);
 
   const router = useRouter();
 
@@ -26,16 +27,15 @@ const MessagesProvider = ({children}) => {
 
   // this will be called by addNewMessage in the Form
   // inverse data flow - pass data up to App
-  const addMessage = async newMessageText => {
+  const addMessage = async (newMessageText: string) => {
     
-    if (messages.some( message =>
-      message.text.toLowerCase() === newMessageText.toLowerCase() )) {
+    if (messages.some((message: TMessage) => message.text.toLowerCase() === newMessageText.toLowerCase())) {
       alert(`${newMessageText} message is already in list of messages!`);
     } else {
 
       // POST Request
       try {
-        const newMessageObject =
+        const newMessageObject: TMessage[] =
           await messageService.create({ text: newMessageText });
         setMessages(messages.concat(newMessageObject));
         router.push('/');
@@ -45,8 +45,8 @@ const MessagesProvider = ({children}) => {
     }
   }
 
-  const editMessage = async (modifiedMessageId, modifiedMessageText) => {
-    const newMessages = messages.map( message =>
+  const editMessage = async (modifiedMessageId: string, modifiedMessageText: string) => {
+    const newMessages: TMessage[] = messages.map((message: TMessage) =>
       message.id === modifiedMessageId
         ? { ...message, text: modifiedMessageText }
         : message
@@ -62,10 +62,10 @@ const MessagesProvider = ({children}) => {
   }
 
 
-  const deleteMessage = async messageId => {
+  const deleteMessage = async (messageId: string) => {
     try {
       await messageService.deleteOne(messageId);
-      setMessages(messages.filter( message => message.id !== messageId ));
+      setMessages(messages.filter((message: TMessage) => message.id !== messageId ));
     } catch (error) {
       console.log('API Error: ' + error);
     }
