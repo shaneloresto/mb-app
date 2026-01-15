@@ -11,7 +11,8 @@ const EditMessageForm = ({ messageText, modifyMessage }) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-        <input type='text'
+        <label className='text-xs'>Update Your Message: </label>
+        <input type='text' className='input'
           value={modifiedText}
           onChange={event => setModifiedText(event.target.value)}
         />

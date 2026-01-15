@@ -16,15 +16,19 @@ const Message = ({ id, messageText }) => {
   }
 
   return (
-    <li onDoubleClick={ () => setIsEditable(true) }>
-      { isEditable
-        ? <EditMessageForm
-            messageText={messageText}
-            modifyMessage={modifyMessage}
-          />
-        : messageText 
-      }
-      <button onClick={ () => deleteMessage(id) }>delete</button>
+    <li className="list-row" onDoubleClick={ () => setIsEditable(true) }>
+      <span className="flex items-center">
+        { isEditable
+          ? <EditMessageForm
+              messageText={messageText}
+              modifyMessage={modifyMessage}
+            />
+          : messageText 
+        }
+      </span>
+      <div className="flex items-center justify-end">
+        <button className="btn btn-square btn-secondary" onClick={ () => deleteMessage(id) }>X</button>
+      </div>
     </li>
   );
 }

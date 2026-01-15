@@ -13,15 +13,17 @@ const DisplayMessages = ({ searchMessage }) => {
   
   return (
     // <List sx={{ ml: 1 }}>
-    <ul>
-      {messagesToShow.map(message =>
-        <Message
-          key={message.id}
-          id={message.id}
-          messageText={message.text}
-        />
-      )}
-    </ul>
+    <div className='w-78 md:w-1/2'>
+      <ul className='list bg-base-100 rounded-box shadow-md my-5'>
+        {messagesToShow.map(message =>
+          <Message
+            key={message.id}
+            id={message.id}
+            messageText={message.text}
+          />
+        )}
+      </ul>
+    </div>
     // </List>
   );
 }

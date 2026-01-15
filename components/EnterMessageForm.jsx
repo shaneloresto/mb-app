@@ -31,12 +31,12 @@ const EnterMessageForm = () => {
     //     </FormControl>
     //   </form>
     // </Box>
-    <div>
+    <div className="flex justify-center">
       <form onSubmit={addNewMessage}>
-        <fieldset>
-          <legend>Enter a Message:</legend>
-          <input value={message} onChange={event => setMessage(event.target.value)} />
-          <button type="submit" disabled={!message}>Add Message</button>
+        <fieldset className="fieldset my-5">
+          <legend className="fieldset-legend">Enter a Message:</legend>
+          <input type="text" className="input mb-3" value={message} onChange={event => setMessage(event.target.value)} />
+          <button className="btn btn-primary rounded-full" type="submit" disabled={!message}>Add Message</button>
         </fieldset>
       </form>
     </div>

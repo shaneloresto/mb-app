@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import MessagesProvider from "@/providers/MessagesProvider";
+import Header from "../components/Header";
 
 export const metadata: Metadata = {
   title: "ICS 221 Message Board App",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 };
 const RootLayout = ({children}: {children: React.ReactNode}) => {
   return (
-    <html><body><MessagesProvider>{children}</MessagesProvider></body></html>
+    <html><body><div className="flex justify-center"><Header/></div><MessagesProvider>{children}</MessagesProvider></body></html>
   );
 }
 export default RootLayout;
