@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const RootLayout = ({children}: {children: React.ReactNode}) => {
   const messagesPromise = messageService.getAll();
   return (
-    <html><body><div className="flex justify-center"><Header/></div><MessagesProvider>{children}</MessagesProvider></body></html>
+    <html><body><div className="flex justify-center"><Header/></div><MessagesProvider messagesPromise={messagesPromise}>{children}</MessagesProvider></body></html>
   );
 }
 export default RootLayout;

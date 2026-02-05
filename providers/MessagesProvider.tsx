@@ -1,29 +1,33 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { use, useState } from 'react';
 import messageService from '@/services/messageService';
 import MessagesContext from '@/context/MessagesContext';
 import { useRouter } from 'next/navigation';
 import type { TMessage } from '@/types/shared.types';
-
-const MessagesProvider = ({children}: {children: React.ReactNode}) => {
+interface MessagesProviderProps<TMessage> {
+  children: React.ReactNode;
+  messagesPromise: Promise<TMessage[]>;
+}
+const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProviderProps<TMessage>) => {
   // list of messages 
-  const [messages, setMessages] = useState<TMessage[]>([]);
+  const serverMessages = use(messagesPromise);
+  const [messages, setMessages] = useState<TMessage[]>(serverMessages);
 
   const router = useRouter();
 
-  useEffect(() => {
-    console.log('useEffect was executed!');
-    // start of IIFE
-    (async () => {
-      try {
-        const serverMessages = await messageService.getAll();
-        setMessages(serverMessages);
-      } catch (error) {
-        console.log('API Error: ' + error);
-      }
-    })();
-    // end IFFE
-  },[]);
+  // useEffect(() => {
+  //   console.log('useEffect was executed!');
+  //   // start of IIFE
+  //   (async () => {
+  //     try {
+  //       const serverMessages = await messageService.getAll();
+  //       setMessages(serverMessages);
+  //     } catch (error) {
+  //       console.log('API Error: ' + error);
+  //     }
+  //   })();
+  //   // end IFFE
+  // },[]);
 
   // this will be called by addNewMessage in the Form
   // inverse data flow - pass data up to App
