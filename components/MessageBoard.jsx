@@ -21,10 +21,12 @@ const MessageBoard = () => {
         }
     };
     useEffect(() => {
-        if (auth.tokenExists()) {
-            setIsAuthenticated(true);
-        }
-    }, []);
+    if (auth.tokenExists() && !auth.hasTokenExpired()) {
+        setIsAuthenticated(true);
+    } else {
+        setIsAuthenticated(false);
+    }
+}, []);
     return (
         <div className='flex flex-col items-center'>
             {isAuthenticated ? (

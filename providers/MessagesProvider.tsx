@@ -42,7 +42,7 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
       // POST Request
       try {
         const newMessageObject: TMessage[] =
-          await messageService.create({ text: newMessageText, bearerAuthHeader });
+          await messageService.create({ text: newMessageText }, bearerAuthHeader);
         setMessages(messages.concat(newMessageObject));
         router.push('/');
       } catch (error) {
