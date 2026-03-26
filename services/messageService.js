@@ -16,6 +16,8 @@ const update = ( id, object ) =>
 const deleteOne = id =>
   axios.delete(`${process.env.NEXT_PUBLIC_SERVICE_URL}/${id}`).then(response => response.data);
 
+const login = object =>
+  axios.post(process.env.NEXT_PUBLIC_LOGIN_URL, object).then( response => response.data );
 
-const messageService = { getAll, create, update, deleteOne };
+const messageService = { getAll, create, update, deleteOne, login };
 export default messageService;

@@ -4,13 +4,19 @@ import FilterMessage from "./FilterMessage";
 import DisplayMessages from "./DisplayMessages";
 import Link from 'next/link';
 import LoginForm from "./LoginForm"
+import messageService from '../services/messageService.js';
 
 const MessageBoard = () => {
     const [searchMessage, setSearchMessage] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const logInUser = (formData) => {
-        console.log(formData);
-        setIsAuthenticated(true);
+    const logInUser = async (formData) => {
+        try {
+            const response = await messageService.login(formData);
+            console.log(response);
+            setIsAuthenticated(true);
+        } catch (e) {
+            console.log(`${e} Login error`);
+        }
     };
     return (
         <div className='flex flex-col items-center'>
