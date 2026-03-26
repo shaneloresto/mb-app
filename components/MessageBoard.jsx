@@ -1,10 +1,11 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilterMessage from "./FilterMessage";
 import DisplayMessages from "./DisplayMessages";
 import Link from 'next/link';
 import LoginForm from "./LoginForm"
 import messageService from '../services/messageService.js';
+import auth from '@/utils/auth';
 
 const MessageBoard = () => {
     const [searchMessage, setSearchMessage] = useState('');
@@ -13,11 +14,17 @@ const MessageBoard = () => {
         try {
             const response = await messageService.login(formData);
             console.log(response);
+            auth.setToken(response.token);
             setIsAuthenticated(true);
         } catch (e) {
             console.log(`${e} Login error`);
         }
     };
+    useEffect(() => {
+        if (auth.tokenExists()) {
+            setIsAuthenticated(true);
+        }
+    }, []);
     return (
         <div className='flex flex-col items-center'>
             {isAuthenticated ? (

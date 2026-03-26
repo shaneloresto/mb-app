@@ -5,8 +5,8 @@ const getAll = () =>
   axios.get(process.env.NEXT_PUBLIC_SERVICE_URL).then(response => response.data);
 
 
-const create = object =>
-  axios.post(process.env.NEXT_PUBLIC_SERVICE_URL, object).then(response => response.data);
+const create = ( object, reqConfig ) =>
+  axios.post(process.env.NEXT_PUBLIC_SERVICE_URL, object, { headers: reqConfig }).then( response => response.data );
 
 
 const update = ( id, object ) =>

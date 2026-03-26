@@ -32,7 +32,9 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
   // this will be called by addNewMessage in the Form
   // inverse data flow - pass data up to App
   const addMessage = async (newMessageText: string) => {
-    
+    const bearerAuthHeader = {
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    }
     if (messages.some((message: TMessage) => message.text.toLowerCase() === newMessageText.toLowerCase())) {
       alert(`${newMessageText} message is already in list of messages!`);
     } else {
@@ -40,7 +42,7 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
       // POST Request
       try {
         const newMessageObject: TMessage[] =
-          await messageService.create({ text: newMessageText });
+          await messageService.create({ text: newMessageText, bearerAuthHeader });
         setMessages(messages.concat(newMessageObject));
         router.push('/');
       } catch (error) {
