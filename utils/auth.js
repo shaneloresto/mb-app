@@ -18,6 +18,12 @@ const hasTokenExpired = () => {
     }
     return false;
 }
-
-const auth = { setToken, tokenExists, hasTokenExpired };
+// returns the username of the logged-in User
+// or 'none' if not logged in
+const getLoggedInUsername = () => {
+    const token = sessionStorage.getItem('token');
+    if (!token) return 'none';
+    return jwtDecode(token).username;
+}
+const auth = { setToken, tokenExists, hasTokenExpired, getLoggedInUsername };
 export default auth;

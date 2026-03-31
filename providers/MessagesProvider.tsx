@@ -4,6 +4,7 @@ import messageService from '@/services/messageService';
 import MessagesContext from '@/context/MessagesContext';
 import { useRouter } from 'next/navigation';
 import type { TMessage } from '@/types/shared.types';
+import auth from '@/utils/auth';
 interface MessagesProviderProps<TMessage> {
   children: React.ReactNode;
   messagesPromise: Promise<TMessage[]>;
@@ -42,7 +43,7 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
       // POST Request
       try {
         const newMessageObject: TMessage[] =
-          await messageService.create({ text: newMessageText }, bearerAuthHeader);
+          await messageService.create({ text: newMessageText, owner: auth.getLoggedInUsername() }, bearerAuthHeader);
         setMessages(messages.concat(newMessageObject));
         router.push('/');
       } catch (error) {

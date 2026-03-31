@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import MessagesContext from '../context/MessagesContext';
 
 
-const Message = ({ id, messageText }) => {
+const Message = ({ id, messageText, owner }) => {
 
   const [ isEditable, setIsEditable ] = useState(false);
 
@@ -17,6 +17,9 @@ const Message = ({ id, messageText }) => {
 
   return (
     <li className="list-row" onDoubleClick={ () => setIsEditable(true) }>
+      <div className="flex items-center">
+        {owner}
+      </div>
       <span className="flex items-center">
         { isEditable
           ? <EditMessageForm

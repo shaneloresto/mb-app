@@ -20,6 +20,7 @@ const DisplayMessages = ({ searchMessage }) => {
             key={message.id}
             id={message.id}
             messageText={message.text}
+            owner={message.owner}
           />
         )}
       </ul>
