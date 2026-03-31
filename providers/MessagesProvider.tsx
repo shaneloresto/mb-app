@@ -52,6 +52,9 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
   }
 
   const editMessage = async (modifiedMessageId: string, modifiedMessageText: string) => {
+    const bearerAuthHeader = {
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    };
     const newMessages: TMessage[] = messages.map((message: TMessage) =>
       message.id === modifiedMessageId
         ? { ...message, text: modifiedMessageText }
@@ -60,7 +63,7 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
 
     try {
       await messageService.update(modifiedMessageId,
-        { text: modifiedMessageText });
+        { text: modifiedMessageText }, bearerAuthHeader);
       setMessages(newMessages);
     } catch (error) {
       console.log('API Error: ' + error);
@@ -69,8 +72,11 @@ const MessagesProvider = <TMessage,>({children, messagesPromise}: MessagesProvid
 
 
   const deleteMessage = async (messageId: string) => {
+    const bearerAuthHeader = {
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    }
     try {
-      await messageService.deleteOne(messageId);
+      await messageService.deleteOne(messageId, bearerAuthHeader);
       setMessages(messages.filter((message: TMessage) => message.id !== messageId ));
     } catch (error) {
       console.log('API Error: ' + error);
