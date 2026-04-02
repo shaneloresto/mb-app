@@ -9,11 +9,11 @@ const create = ( object, reqConfig ) =>
   axios.post(process.env.NEXT_PUBLIC_SERVICE_URL, object, { headers: reqConfig }).then( response => response.data );
 
 
-const update = ( id, object ) =>
+const update = ( id, object, reqConfig ) =>
   axios.patch(`${process.env.NEXT_PUBLIC_SERVICE_URL}/${id}`, object, { headers: reqConfig }).then(response => response.data);
 
 
-const deleteOne = id =>
+const deleteOne = ( id, reqConfig ) =>
   axios.delete(`${process.env.NEXT_PUBLIC_SERVICE_URL}/${id}`, { headers: reqConfig }).then(response => response.data);
 
 const login = object =>
