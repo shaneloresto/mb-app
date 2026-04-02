@@ -6,6 +6,7 @@ import Link from 'next/link';
 import LoginForm from "./LoginForm"
 import messageService from '../services/messageService.js';
 import auth from '@/utils/auth';
+import Chat from './chat/Chat';
 
 const MessageBoard = () => {
     const [searchMessage, setSearchMessage] = useState('');
@@ -40,6 +41,7 @@ const MessageBoard = () => {
                         Add a Message
                     </Link>
                 </div>
+                <Chat></Chat>
                 <DisplayMessages searchMessage={searchMessage}/>
                 </>
             ) : (
