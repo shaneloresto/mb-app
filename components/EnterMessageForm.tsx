@@ -1,18 +1,16 @@
-'use client'
+'use client';
 
 import { useContext } from 'react';
 import MessagesContext from '@/context/MessagesContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import Link from 'next/link';
 
-// TypeScript type for Form Data
 type FormData = {
   messageText: string;
-}
+};
 
-// Zod Schema for the Form's Message
-// the message object is for real-time validation
 const messageSchema = z.object({
   messageText: z
     .string()
@@ -21,43 +19,74 @@ const messageSchema = z.object({
     .max(30, { message: "Your message must be no more than 30 characters." })
 });
 
-
 const EnterMessageForm = () => {
-
   const { addMessage } = useContext(MessagesContext);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(messageSchema),
-  })
-
+  });
 
   return (
-    <div className="md:w-1/2 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="mx-auto max-w-2xl">
-        <div className="text-center">
-          <h2 className="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
-            Add a Message
-          </h2>
+    <div className="w-full max-w-sm mx-auto my-8">
+      <div className="bg-base-100 border border-base-300 rounded-xl p-8 shadow-sm">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-base-content">
+              Add Message
+            </h2>
+            <p className="text-sm text-base-content/60 mt-1">
+              Create a new message for the board
+            </p>
+          </div>
         </div>
 
-        {/* Card */}
-        <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-neutral-900 dark:border-neutral-700">
-          <form onSubmit={handleSubmit( data => addMessage(data.messageText)) }>
-            <div className="mb-4 sm:mb-8">
-              <label htmlFor="message" className="block mb-2 text-sm font-medium dark:text-white">Enter a Message:</label>
-              <input type="text" {...register("messageText")} id="message" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter a message..." />
-              <p className="ml-1 mt-2 text-sm text-red-600">{errors.messageText?.message}</p>
-            </div>
-            <div className="mt-6 grid">
-              <button type="submit" className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Add Message</button>
-            </div>
-          </form>
-        </div>
-        {/* End Card */}
+        {/* Form */}
+        <form onSubmit={handleSubmit(data => addMessage(data.messageText))} className="space-y-4">
+          <div>
+            <label htmlFor="messageText" className="block text-sm font-medium text-base-content mb-1.5">
+              Message
+            </label>
+            <input
+              type="text"
+              id="messageText"
+              autoFocus
+              {...register("messageText")}
+              placeholder="Enter message (3-30 characters)"
+              className={`input input-bordered w-full rounded-lg ${
+                errors.messageText ? 'input-error' : ''
+              }`}
+              aria-describedby={errors.messageText ? "message-error" : undefined}
+            />
+            {errors.messageText && (
+              <p className="text-xs text-error mt-1" id="message-error">
+                {errors.messageText.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-2.5 px-4 mt-2 rounded-lg bg-neutral text-neutral-content font-medium hover:bg-neutral-focus active:scale-[0.99] transition-all flex justify-center items-center"
+          >
+            {isSubmitting ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Post Message"
+            )}
+          </button>
+
+          <div className="text-center pt-2">
+            <Link href="/" className="text-xs text-base-content/60 hover:text-base-content transition-colors">
+              ← Back to messages
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   );

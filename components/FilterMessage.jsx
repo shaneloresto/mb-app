@@ -1,7 +1,15 @@
-const FilterMessage = ({searchMessage, handleSearchMessageChange}) => (
-  <div className="flex flex-col">
-    <label className="label mt-5 text-base-content">Filter Messages: </label>
-    <input type="text" className="input mt-1 w-78 md:w-156" value={searchMessage} onChange={handleSearchMessageChange} placeholder="Show only messages containing..." />
+const FilterMessage = ({ searchMessage, handleSearchMessageChange }) => (
+  <div className="w-full">
+    <div className="relative">
+      <input
+        type="text"
+        className="input input-bordered w-full rounded-lg bg-base-100 text-sm"
+        value={searchMessage}
+        onChange={handleSearchMessageChange}
+        placeholder="Filter messages by text..."
+      />
+    </div>
   </div>
 );
+
 export default FilterMessage;
